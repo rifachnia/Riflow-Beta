@@ -1,153 +1,265 @@
-# Riflow Trade
+# Riflow Beta
 
-Riflow is a CLI trading agent shell. It is intentionally organized as its own project: different command shape, different module layout, different state model, and a terminal-oriented operator experience.
+AI-Powered Paper Trading CLI
 
-This first version is paper-mode by default. It gives you the core workflow without copying another dashboard:
+Riflow is a terminal-based trading research and paper-trading platform that allows multiple AI models to act as independent traders.
 
-- `status` shows wallet, risk, PnL, and open exposure.
-- `watch` opens an interactive terminal cockpit.
-- `scan` produces scored token candidates from a local scanner adapter.
-- `positions` lists active positions.
-- `open <symbol>` creates a paper position.
-- `close <id>` closes a paper position.
-- `logs` tails the local event log.
+Instead of relying on a single model, Riflow lets you compare Claude, Gemini, GPT, MiMo, DeepSeek, and other LLMs under the same market conditions.
 
-## Run
+Each AI trader maintains its own memory, performance history, and lessons learned over time.
 
-```bash
-cd /d E:\riflowtrade
-npm run status
-npm run scan
-npm start
-```
+> ⚠️ Current Status: Paper Trading Only
+>
+> Live trading is NOT implemented.
+> No real funds are used.
+> Riflow is currently focused on simulation, evaluation, and AI benchmarking.
 
-Or run commands directly:
+---
 
-```bash
-node src/cli.js status
-node src/cli.js watch
-node src/cli.js open FLOW 0.25
-node src/cli.js close pos_...
-```
+## Features
 
-To use the shorter `riflow` command from this folder, link it once:
+### AI Trading Agents
 
-```bash
-npm link
-riflow providers
-```
+Supports multiple providers:
 
-## AI Mode
+- Claude
+- Gemini
+- OpenAI
+- OpenRouter
+- MiMo
+- Compatible OpenAI-style endpoints
 
-Riflow talks to Xiaomi MiMo through an OpenAI-compatible endpoint. The default config points to the local Riflow proxy:
+Each model can act as an independent trader.
 
-```bash
-cd /d E:\riflowtrade
-npm run mimo:proxy
-```
+---
 
-Then from Riflow:
+### Paper Trading
 
-```bash
-node src/cli.js ai:test
-node src/cli.js decide
-node src/cli.js auto
-```
+Execute simulated trades without risking capital.
 
-`auto` is paper-only in this build. It asks AI for `OPEN`, `CLOSE`, or `WAIT`, then applies risk gates before changing the paper portfolio.
+- OPEN
+- CLOSE
+- WAIT
 
-If `ai:test` returns `API key required`, the current upstream/gateway credential is not accepted. The AI integration is already wired; update `LLM_BASE_URL` and `LLM_API_KEY` in `.env` or `data/config.json`.
+All positions are virtual.
 
-## Adaptive Trader Memory
+---
 
-Riflow gives each configured AI trader its own local memory file under `memory/`, such as:
+### Scanner
+
+Analyze opportunities and generate trade candidates based on market data.
+
+Scanner output is passed into the AI decision engine.
+
+---
+
+### Adaptive Memory System
+
+Every AI trader has its own memory.
+
+Example:
 
 ```text
-memory/mimo.json
-memory/gemini.json
-memory/openai.json
-memory/claude.json
+memory/
+├── claude.json
+├── gemini.json
+├── openai.json
+└── mimo.json
 ```
 
-The model does not permanently learn by itself. Riflow stores lessons, avoid/prefer patterns, confidence adjustments, risk improvements, and performance snapshots locally, then injects that memory into future paper-trading prompts.
+Memory stores:
 
-The shared trader prompt includes portfolio summary, open positions, scanner candidates, performance summary, lessons learned, recent decisions, model-specific memory, risk config, and auto-trade config. The model must return strict JSON only:
+- Lessons learned
+- Preferred patterns
+- Avoid patterns
+- Confidence adjustments
+- Risk improvements
 
-```json
-{
-  "action": "OPEN|CLOSE|WAIT",
-  "symbol": "optional",
-  "confidence": 0,
-  "reason": "concise explanation",
-  "risk_level": "LOW|MEDIUM|HIGH"
-}
-```
+Models do not permanently learn.
 
-The prompt always tells providers to preserve capital first, prefer `WAIT` when uncertain, avoid overtrading, never assume missing data, and use only provided data. There is no live trading in this build.
+Instead, Riflow injects memory back into future prompts to create adaptive behavior.
 
-## Performance Coach
+---
 
-The coach reviews recent closed paper trades and recent AI decisions for one provider/model, then consolidates new lessons into that model's memory.
+### Performance Coach
 
-```bash
-riflow coach mimo --last 7d
-riflow coach mimo --trades 50
-riflow memory show mimo
-riflow memory reset mimo
-riflow memory export mimo
-riflow memory import mimo ./backup-memory.json
-```
+Riflow includes a reflection system that reviews historical trades.
 
-Example workflow:
+The coach identifies:
 
-```bash
-riflow use mimo
-riflow scan
-riflow auto
-riflow coach mimo --last 7d
-riflow memory show mimo
-```
+- Recurring mistakes
+- Successful patterns
+- Strong market conditions
+- Weak market conditions
+- New trading rules
 
-Memory consolidation removes duplicates, keeps actionable rules, caps active lessons to 20 per section, and prioritizes rules backed by PnL, winrate, or drawdown signals.
+Generated lessons are stored in model memory.
 
-## Multi-Provider Leaderboard
+---
 
-Configured providers live in `data/config.json` under `llm.providers`.
+### Shared Prompt Engine
 
-```bash
-riflow providers
-riflow select-provider
-riflow test-provider
-riflow add-provider
-riflow use mimo
-riflow leaderboard
-riflow stats mimo
-riflow battle --models mimo,mimo-fast --rounds 10
-riflow coach mimo --last 7d
-riflow memory show mimo
-```
+All providers use the same prompt structure.
 
-Battle mode is paper-only. Each model receives the same scanner snapshot per round, then gets an independent paper book under `state.providerBooks`. Every position and closed trade stores `providerId` and `modelId`.
+This ensures fair comparison between models.
 
-Inside `watch`:
+Example:
 
 ```text
-r refresh scanner
-o open the top scanner candidate
-c close the first open position
-l toggle event log panel
-q quit
+Claude
+Gemini
+GPT
+MiMo
 ```
 
-## Design Direction
+receive the same:
 
-The app is built around a terminal product rather than a web dashboard. The folder structure separates core rules, storage, services, and UI:
+- Portfolio
+- Market data
+- Scanner output
+- Performance summary
+- Lessons learned
+- Memory
 
-- `src/core`: context, formatting, risk math
-- `src/io`: JSON store and logging
-- `src/prompts`: shared trader, coach, and memory prompt builders
-- `src/services`: scanner and portfolio logic
-- `memory`: model-specific adaptive memory files
-- `src/ui`: terminal screen rendering
+This makes benchmarking more meaningful.
 
-Live trading adapters can be added later under `src/services` without changing the operator commands.
+---
+
+## Current Architecture
+
+```text
+Scanner
+    ↓
+Market Snapshot
+    ↓
+Prompt Builder
+    ↓
+AI Trader
+    ↓
+Decision
+    ↓
+Paper Trade
+    ↓
+Performance Tracking
+    ↓
+Coach Review
+    ↓
+Memory Update
+    ↓
+Next Trading Session
+```
+
+---
+
+## Commands
+
+### Run
+
+```bash
+riflow run
+```
+
+### Paper Trading
+
+```bash
+riflow run --paper
+```
+
+### Show Memory
+
+```bash
+riflow memory show claude
+```
+
+### Reset Memory
+
+```bash
+riflow memory reset claude
+```
+
+### Coach Review
+
+Last 7 days:
+
+```bash
+riflow coach claude --last 7d
+```
+
+Last 50 trades:
+
+```bash
+riflow coach claude --trades 50
+```
+
+---
+
+## Philosophy
+
+Riflow is not trying to predict markets with a magical prompt.
+
+The goal is to build a framework where AI models can:
+
+1. Make trading decisions
+2. Track performance
+3. Analyze mistakes
+4. Generate lessons
+5. Improve future decision quality through memory
+
+The model itself does not learn.
+
+The system learns.
+
+---
+
+## Roadmap
+
+### Completed
+
+- CLI/TUI
+- AI Integration Layer
+- MiMo Proxy Support
+- Scanner
+- Paper Trading
+- Position Management
+- State Persistence
+- Adaptive Memory
+- Performance Coach
+- Shared Prompt Engine
+
+### In Progress
+
+- Multi-model Leaderboards
+- Strategy Comparison
+- Backtesting Framework
+- Battle Mode
+
+### Planned
+
+- Portfolio Analytics
+- Risk Dashboards
+- Market Regime Detection
+- Strategy Marketplace
+
+### Not Yet Implemented
+
+- Live Trading
+- Exchange Execution
+- Real Capital Deployment
+
+---
+
+## Safety
+
+Riflow currently operates in paper-trading mode only.
+
+No exchange orders are submitted.
+
+No real capital is used.
+
+Always verify results independently.
+
+---
+
+## License
+
+MIT
