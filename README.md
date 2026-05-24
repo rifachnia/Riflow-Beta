@@ -1,6 +1,6 @@
 # Riflow Trade
 
-Riflow is a CLI-first trading agent shell. It is intentionally organized as its own project: different command shape, different module layout, different state model, and a terminal-oriented operator experience.
+Riflow is a CLI trading agent shell. It is intentionally organized as its own project: different command shape, different module layout, different state model, and a terminal-oriented operator experience.
 
 This first version is paper-mode by default. It gives you the core workflow without copying another dashboard:
 
