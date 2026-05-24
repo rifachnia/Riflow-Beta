@@ -1,0 +1,9 @@
+{"ts":"2026-05-24T10:16:20.252Z","type":"scan.completed","count":12,"leader":"KAI"}
+{"ts":"2026-05-24T10:47:54.294Z","type":"battle.decision","round":1,"providerId":"mimo","modelId":"mimo-v2.5-pro","action":"WAIT","result":"model error: LLM request failed 401: {\"error\":{\"message\":\"API key required\",\"type\":\"authentication_error\",\"code\":\"api_key_required\"}}"}
+{"ts":"2026-05-24T10:47:54.581Z","type":"battle.decision","round":1,"providerId":"mimo-fast","modelId":"mimo-v2-flash","action":"WAIT","result":"model error: LLM request failed 401: {\"error\":{\"message\":\"API key required\",\"type\":\"authentication_error\",\"code\":\"api_key_required\"}}"}
+{"ts":"2026-05-24T12:25:21.642Z","type":"scan.completed","count":12,"leader":"NUSA"}
+{"ts":"2026-05-24T12:35:24.224Z","type":"scan.completed","count":12,"leader":"RIFT"}
+{"ts":"2026-05-24T12:37:13.136Z","type":"scan.completed","count":12,"leader":"EMBER"}
+{"ts":"2026-05-24T12:44:05.403Z","type":"scan.completed","count":12,"leader":"FLOW"}
+{"ts":"2026-05-24T13:14:11.639Z","type":"ai.decision","action":"WAIT","symbol":"OPTIONAL SYMBOL STRING OR NULL","positionId":null,"sizeSol":0,"confidence":null,"reason":"concise explanation","risk_level":"MEDIUM","providerId":"mimo","modelId":"mimo-v2.5-pro"}
+{"ts":"2026-05-24T13:17:02.052Z","type":"ai.decision","action":"OPEN","symbol":"FLOW","positionId":null,"sizeSol":0,"confidence":85,"reason":"FLOW has highest score (100), rising momentum, and meets risk config thresholds for age (23h<48h), liquidity (77k>15k), and volume (124k>25k).","risk_level":"MEDIUM","providerId":"mimo","modelId":"mimo-v2.5-pro"}

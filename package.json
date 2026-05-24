@@ -1,0 +1,21 @@
+{
+  "name": "riflowtrade",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "CLI-first trading agent workspace with paper/live guardrails.",
+  "bin": {
+    "riflow": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js menu",
+    "status": "node src/cli.js status",
+    "scan": "node src/cli.js scan",
+    "ai:test": "node src/cli.js ai:test",
+    "auto": "node src/cli.js auto",
+    "mimo:proxy": "node src/mimo-proxy.js",
+    "check": "node --check src/cli.js && node --check src/mimo-proxy.js && node --check src/core/context.js && node --check src/core/format.js && node --check src/core/risk.js && node --check src/io/json-store.js && node --check src/io/logger.js && node --check src/prompts/traderPrompt.js && node --check src/prompts/coachPrompt.js && node --check src/prompts/memoryPrompt.js && node --check src/services/ai.js && node --check src/services/agent.js && node --check src/services/auto-runner.js && node --check src/services/coach.js && node --check src/services/memory.js && node --check src/services/portfolio.js && node --check src/services/providers.js && node --check src/services/scanner.js && node --check src/ui/screen.js && node src/checks/validation.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

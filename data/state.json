@@ -1,0 +1,171 @@
+{
+  "startedAt": "2026-05-24T10:52:23.753Z",
+  "paperBalanceSol": 5,
+  "positions": [],
+  "closedTrades": [],
+  "lastScan": [
+    {
+      "symbol": "FLOW",
+      "pair": "FLOW/SOL",
+      "liquidityUsd": 77303,
+      "volume24hUsd": 124299,
+      "ageHours": 23,
+      "holders": 1165,
+      "momentum": "rising",
+      "flags": [],
+      "score": 100
+    },
+    {
+      "symbol": "SORA",
+      "pair": "SORA/SOL",
+      "liquidityUsd": 37304,
+      "volume24hUsd": 80892,
+      "ageHours": 40,
+      "holders": 1758,
+      "momentum": "flat",
+      "flags": [],
+      "score": 98
+    },
+    {
+      "symbol": "PULSE",
+      "pair": "PULSE/SOL",
+      "liquidityUsd": 85794,
+      "volume24hUsd": 162726,
+      "ageHours": 50,
+      "holders": 1192,
+      "momentum": "rising",
+      "flags": [],
+      "score": 94
+    },
+    {
+      "symbol": "RIFT",
+      "pair": "RIFT/SOL",
+      "liquidityUsd": 87310,
+      "volume24hUsd": 63570,
+      "ageHours": 62,
+      "holders": 436,
+      "momentum": "rising",
+      "flags": [],
+      "score": 86
+    },
+    {
+      "symbol": "NUSA",
+      "pair": "NUSA/SOL",
+      "liquidityUsd": 95007,
+      "volume24hUsd": 86531,
+      "ageHours": 79,
+      "holders": 1797,
+      "momentum": "flat",
+      "flags": [],
+      "score": 84
+    },
+    {
+      "symbol": "EMBER",
+      "pair": "EMBER/SOL",
+      "liquidityUsd": 93664,
+      "volume24hUsd": 147988,
+      "ageHours": 64,
+      "holders": 2454,
+      "momentum": "flat",
+      "flags": [],
+      "score": 84
+    },
+    {
+      "symbol": "ORBIT",
+      "pair": "ORBIT/SOL",
+      "liquidityUsd": 37056,
+      "volume24hUsd": 25812,
+      "ageHours": 64,
+      "holders": 1878,
+      "momentum": "flat",
+      "flags": [],
+      "score": 84
+    },
+    {
+      "symbol": "VAULT",
+      "pair": "VAULT/SOL",
+      "liquidityUsd": 77127,
+      "volume24hUsd": 17963,
+      "ageHours": 87,
+      "holders": 1229,
+      "momentum": "rising",
+      "flags": [],
+      "score": 76
+    },
+    {
+      "symbol": "KAI",
+      "pair": "KAI/SOL",
+      "liquidityUsd": 38435,
+      "volume24hUsd": 138471,
+      "ageHours": 51,
+      "holders": 137,
+      "momentum": "rising",
+      "flags": [
+        "thin holders"
+      ],
+      "score": 74
+    },
+    {
+      "symbol": "LUMA",
+      "pair": "LUMA/SOL",
+      "liquidityUsd": 9435,
+      "volume24hUsd": 102015,
+      "ageHours": 75,
+      "holders": 2081,
+      "momentum": "rising",
+      "flags": [
+        "low liquidity"
+      ],
+      "score": 64
+    },
+    {
+      "symbol": "KITE",
+      "pair": "KITE/SOL",
+      "liquidityUsd": 10957,
+      "volume24hUsd": 52561,
+      "ageHours": 93,
+      "holders": 1427,
+      "momentum": "rising",
+      "flags": [
+        "low liquidity"
+      ],
+      "score": 64
+    },
+    {
+      "symbol": "NOVA",
+      "pair": "NOVA/SOL",
+      "liquidityUsd": 13688,
+      "volume24hUsd": 104988,
+      "ageHours": 72,
+      "holders": 254,
+      "momentum": "rising",
+      "flags": [
+        "low liquidity"
+      ],
+      "score": 56
+    }
+  ],
+  "providerBooks": {
+    "mimo": {
+      "paperBalanceSol": 5,
+      "positions": [],
+      "closedTrades": []
+    },
+    "mimo-fast": {
+      "paperBalanceSol": 5,
+      "positions": [],
+      "closedTrades": []
+    },
+    "local": {
+      "paperBalanceSol": 5,
+      "positions": [],
+      "closedTrades": []
+    },
+    "asd": {
+      "paperBalanceSol": 5,
+      "positions": [],
+      "closedTrades": []
+    }
+  },
+  "battleHistory": []
+}
