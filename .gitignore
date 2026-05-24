@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# local runtime data
+data/state.json
+logs/
+memory/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# build / cache
+dist/
+build/
+coverage/
+.cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
