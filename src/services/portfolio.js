@@ -1,3 +1,6 @@
+import { markMeteoraPosition } from "./meteora.js";
+import { buildRange } from "./dlmm-strategy.js";
+
 export function openPositions(state) {
   return state.positions.filter((position) => position.status === "open");
 }
@@ -51,6 +54,64 @@ export function createPaperPosition(symbol, sizeSol, provider = null) {
   };
 }
 
+export function createPaperPositionFromCandidate(candidate, sizeSol, provider = null, config = {}) {
+  const position = createPaperPosition(candidate.symbol, sizeSol, provider);
+  position.source = candidate.source || "local-sim";
+  position.poolAddress = candidate.poolAddress || candidate.symbol;
+  position.baseMint = candidate.baseMint || candidate.tokenAddress || null;
+  position.quoteMint = candidate.quoteMint || null;
+  position.tokenAddress = candidate.tokenAddress || candidate.baseMint || null;
+  position.entryPrice = candidate.currentPrice ?? candidate.price ?? position.entryPrice;
+  position.entryActiveBin = candidate.activeBin ?? null;
+  position.entryTvlUsd = candidate.tvlUsd ?? null;
+  position.entryActiveTvlUsd = candidate.activeTvlUsd ?? candidate.raw?.active_tvl ?? null;
+  position.entryVolume24hUsd = candidate.volume24hUsd ?? null;
+  position.entryFees24hUsd = candidate.fees24hUsd ?? null;
+  position.entryFeeTvlRatio = candidate.feeTvlRatio ?? candidate.raw?.fee_tvl_ratio ?? null;
+  position.entryVolatility = candidate.volatility ?? candidate.raw?.volatility ?? null;
+  position.binStep = candidate.binStep ?? null;
+  Object.assign(position, buildRange(candidate, config));
+  position.entryTimestamp = new Date().toISOString();
+  position.initialMetrics = candidate;
+  position.calculationMode = candidate.source === "meteora-dlmm" ? "approximate-dlmm" : "local-sim";
+  position.estimatedFeesUsd = 0;
+  position.claimableFeesUsd = 0;
+  position.lastFeeUpdateAt = position.entryTimestamp;
+  position.totalOutOfRangeMinutes = 0;
+  position.redeployCount = 0;
+  position.peakPnlPct = 0;
+  return position;
+}
+
+export async function markPositionWithMarketData(position, config, currentPool = null) {
+  if (position.source === "meteora-dlmm" || position.poolAddress) {
+    return markMeteoraPosition(config, position, currentPool);
+  }
+  return markPosition(position);
+}
+
+export async function closePaperPositionWithMarketData(position, config, provider = null, currentPool = null) {
+  const marked = await markPositionWithMarketData(position, config, currentPool);
+  const trade = closePaperPosition(marked, marked.pnlPct, provider);
+  trade.poolAddress = position.poolAddress || position.symbol;
+  trade.baseMint = position.baseMint || null;
+  trade.quoteMint = position.quoteMint || null;
+  trade.entryPrice = position.entryPrice ?? null;
+  trade.currentPrice = marked.currentPrice ?? marked.markPrice ?? null;
+  trade.entryActiveBin = position.entryActiveBin ?? null;
+  trade.currentActiveBin = marked.currentActiveBin ?? null;
+  trade.estimatedFeesUsd = marked.estimatedFeesUsd ?? 0;
+  trade.feeUsd = marked.estimatedFeesUsd ?? marked.claimableFeesUsd ?? 0;
+  trade.claimableFeesUsd = marked.claimableFeesUsd ?? 0;
+  trade.calculationMode = marked.calculationMode || "approximate-dlmm";
+  trade.warnings = marked.warnings || [];
+  trade.durationMinutes = durationMinutes(position.openedAt, trade.closedAt);
+  trade.outOfRangeMinutes = marked.totalOutOfRangeMinutes || 0;
+  trade.entryScore = position.scoreAtOpen ?? position.initialMetrics?.candidateScore ?? position.initialMetrics?.score ?? null;
+  trade.maxDrawdownPct = position.maxDrawdownPct ?? Math.min(0, marked.pnlPct ?? 0);
+  return trade;
+}
+
 export function closePaperPosition(position, pnlPct = 0, provider = null) {
   const marked = markPosition(position);
   const finalPct = pnlPct === null ? marked.pnlPct : Number(pnlPct);
@@ -68,4 +129,8 @@ export function closePaperPosition(position, pnlPct = 0, provider = null) {
     openedAt: position.openedAt,
     closedAt: new Date().toISOString()
   };
+}
+
+function durationMinutes(start, end) {
+  return Math.max(0, Math.round((new Date(end || Date.now()).getTime() - new Date(start || Date.now()).getTime()) / 60000));
 }

@@ -1,0 +1,172 @@
+{
+  "points": [
+    {
+      "timestamp": "2026-05-25T06:59:17.726Z",
+      "equityUsd": 745.65,
+      "realizedPnlUsd": -4.35,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0.0546,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T06:59:55.578Z",
+      "equityUsd": 745.65,
+      "realizedPnlUsd": -4.35,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0.0546,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:00:29.896Z",
+      "equityUsd": 745.65,
+      "realizedPnlUsd": -4.35,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0.0546,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:01:03.812Z",
+      "equityUsd": 745.65,
+      "realizedPnlUsd": -4.35,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0.0546,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:01:36.718Z",
+      "equityUsd": 745.65,
+      "realizedPnlUsd": -4.35,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0.0546,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:02:14.926Z",
+      "equityUsd": 745.65,
+      "realizedPnlUsd": -4.35,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0.0546,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:03:03.701Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:03:36.223Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:04:09.580Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:04:44.671Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:05:17.572Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:28:34.813Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:29:21.400Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:29:54.808Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:30:29.363Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:31:02.478Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:31:36.974Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:32:09.852Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:32:42.256Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:33:17.829Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    },
+    {
+      "timestamp": "2026-05-25T07:33:51.738Z",
+      "equityUsd": 150,
+      "realizedPnlUsd": 0,
+      "floatingPnlUsd": 0,
+      "feesUsd": 0,
+      "openPositions": 0
+    }
+  ]
+}

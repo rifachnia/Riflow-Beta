@@ -1,0 +1,37 @@
+{
+  "updatedAt": "2026-05-25T07:33:51.737Z",
+  "pid": 22336,
+  "mode": "running",
+  "round": 9,
+  "source": "meteora-dlmm",
+  "opened": 0,
+  "closed": 0,
+  "claimed": 0,
+  "consecutiveErrors": 0,
+  "lastDecision": {
+    "action": "WAIT",
+    "symbol": null,
+    "positionId": null,
+    "sizeSol": 0,
+    "confidence": 65,
+    "reason": "Candidate HANTA has excellent score and positive signals, but token age (15573 hours) exceeds maxTokenAgeHours (48) risk config. Also, TVL (18082) is slightly below minLiquidityUsd (15000) threshold. Prefer WAIT to avoid violating risk rule",
+    "risk_level": "MEDIUM",
+    "providerId": "mimo",
+    "modelId": "mimo-v2.5-pro"
+  },
+  "lastScan": {
+    "passed": 1,
+    "filtered": 47,
+    "source": "meteora-dlmm"
+  },
+  "openCount": 0,
+  "performance": {
+    "realizedPnlUsd": 0,
+    "floatingPnlUsd": 0,
+    "estimatedOpenFeesUsd": 0,
+    "openCount": 0,
+    "closedCount": 0,
+    "openPositions": []
+  },
+  "lastStep": "sleeping"
+}

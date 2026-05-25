@@ -2,12 +2,14 @@ import { chatJson } from "./ai.js";
 import { buildTraderMessages, traderDecisionSchema } from "../prompts/traderPrompt.js";
 import { loadMemory } from "./memory.js";
 import { getProvider } from "./providers.js";
+import { getLessonsForPrompt } from "./lessons.js";
 
 export async function decideNextAction(ctx, providerOverride = null) {
   const provider = providerOverride || ctx.provider || getProvider(ctx.config);
   const memory = await loadMemory(ctx, provider);
   const recentDecisions = await loadRecentDecisions(ctx, provider.id);
-  const decision = await chatJson(ctx.config, buildTraderMessages(ctx, provider, memory, recentDecisions), traderDecisionSchema, provider);
+  const lessons = await getLessonsForPrompt(ctx);
+  const decision = await chatJson(ctx.config, buildTraderMessages(ctx, provider, memory, recentDecisions, lessons), traderDecisionSchema, provider);
 
   return {
     ...normalizeDecision(decision),

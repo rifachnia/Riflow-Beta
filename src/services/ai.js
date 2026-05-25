@@ -35,6 +35,7 @@ async function chatOpenAiCompatible(config, provider, messages, schemaHint) {
   if (!provider?.baseUrl) throw new Error("LLM baseUrl is not configured");
   const response = await fetch(endpoint(provider.baseUrl), {
     method: "POST",
+    signal: timeoutSignal(provider.timeoutMs ?? config.llm?.requestTimeoutMs ?? 60000),
     headers: {
       "Authorization": `Bearer ${provider.apiKey}`,
       "X-Api-Key": provider.apiKey,
@@ -45,7 +46,8 @@ async function chatOpenAiCompatible(config, provider, messages, schemaHint) {
     body: JSON.stringify({
       model: provider.model,
       temperature: Number(provider.temperature ?? config.llm.temperature ?? 0.2),
-      max_tokens: Math.max(4096, Number(provider.maxTokens ?? config.llm.maxTokens ?? 700)),
+      max_tokens: Number(provider.maxTokens ?? config.llm.maxTokens ?? 700),
+      ...openAiCompatibleExtras(provider),
       messages: [
         {
           role: "system",
@@ -75,6 +77,7 @@ async function textOpenAiCompatible(config, provider, prompt) {
   if (!provider?.baseUrl) throw new Error("LLM baseUrl is not configured");
   const response = await fetch(endpoint(provider.baseUrl), {
     method: "POST",
+    signal: timeoutSignal(provider.timeoutMs ?? config.llm?.requestTimeoutMs ?? 60000),
     headers: {
       "Authorization": `Bearer ${provider.apiKey}`,
       "X-Api-Key": provider.apiKey,
@@ -86,6 +89,7 @@ async function textOpenAiCompatible(config, provider, prompt) {
       model: provider.model,
       temperature: Number(provider.temperature ?? config.llm.temperature ?? 0.2),
       max_tokens: Number(provider.testMaxTokens ?? 500),
+      ...openAiCompatibleExtras(provider),
       messages: [{ role: "user", content: prompt }]
     })
   });
@@ -108,6 +112,7 @@ async function chatAnthropic(config, provider, messages, schemaHint) {
 
   const response = await fetch(`${baseUrl}/messages`, {
     method: "POST",
+    signal: timeoutSignal(provider.timeoutMs ?? config.llm?.requestTimeoutMs ?? 60000),
     headers: {
       "x-api-key": provider.apiKey,
       "anthropic-version": provider.apiVersion || "2023-06-01",
@@ -137,6 +142,7 @@ async function textAnthropic(config, provider, prompt) {
   const baseUrl = (provider.baseUrl || "https://api.anthropic.com/v1").replace(/\/+$/, "");
   const response = await fetch(`${baseUrl}/messages`, {
     method: "POST",
+    signal: timeoutSignal(provider.timeoutMs ?? config.llm?.requestTimeoutMs ?? 60000),
     headers: {
       "x-api-key": provider.apiKey,
       "anthropic-version": provider.apiVersion || "2023-06-01",
@@ -169,6 +175,7 @@ async function chatGemini(config, provider, messages, schemaHint) {
 
   const response = await fetch(`${baseUrl}/models/${encodeURIComponent(provider.model)}:generateContent?key=${encodeURIComponent(provider.apiKey)}`, {
     method: "POST",
+    signal: timeoutSignal(provider.timeoutMs ?? config.llm?.requestTimeoutMs ?? 60000),
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
@@ -191,6 +198,7 @@ async function textGemini(config, provider, prompt) {
   const baseUrl = (provider.baseUrl || "https://generativelanguage.googleapis.com/v1beta").replace(/\/+$/, "");
   const response = await fetch(`${baseUrl}/models/${encodeURIComponent(provider.model)}:generateContent?key=${encodeURIComponent(provider.apiKey)}`, {
     method: "POST",
+    signal: timeoutSignal(provider.timeoutMs ?? config.llm?.requestTimeoutMs ?? 60000),
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
@@ -217,8 +225,6 @@ function extractText(data) {
     const text = content.map((part) => part.text || part.content || "").filter(Boolean).join("\n").trim();
     if (text) return text;
   }
-  if (typeof message.reasoning_content === "string" && message.reasoning_content.trim()) return message.reasoning_content.trim();
-  if (typeof message.reasoning === "string" && message.reasoning.trim()) return message.reasoning.trim();
   if (typeof choice?.text === "string" && choice.text.trim()) return choice.text.trim();
   if (typeof data?.output_text === "string" && data.output_text.trim()) return data.output_text.trim();
   if (Array.isArray(data?.output)) {
@@ -232,9 +238,26 @@ function extractText(data) {
   return "";
 }
 
+function openAiCompatibleExtras(provider) {
+  const tag = `${provider?.id || ""} ${provider?.name || ""} ${provider?.model || ""}`.toLowerCase();
+  if (provider?.disableReasoning || tag.includes("mimo")) return { reasoning: { enabled: false } };
+  if (provider?.reasoning === false) return { reasoning: { enabled: false } };
+  return {};
+}
+
 function activeProvider(config) {
   const providers = config.llm?.providers || [];
   return providers.find((provider) => provider.id === config.llm?.activeProviderId) || providers[0] || config.llm;
+}
+
+function timeoutSignal(ms) {
+  const timeout = Math.max(1000, Number(ms || 60000));
+  if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+    return AbortSignal.timeout(timeout);
+  }
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), timeout).unref?.();
+  return controller.signal;
 }
 
 export function parseJson(text) {
