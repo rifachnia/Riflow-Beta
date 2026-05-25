@@ -1,6 +1,6 @@
-# Riflow Beta
+﻿# Riflow Beta
 
-AI-powered paper trading CLI for comparing model-driven traders.
+Paper trading CLI for Meteora DLMM pools with AI-driven screening, risk management, and adaptive memory.
 
 Riflow is terminal-first and paper-only. It supports multiple AI providers, adaptive model memory, performance coaching, hard filters, critic review, structured decision logs, pool memory, and dry-run-first execution.
 
