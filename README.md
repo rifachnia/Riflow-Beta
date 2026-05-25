@@ -301,7 +301,7 @@ Each entry includes timestamp, dry-run flag, agent name, action type, pool/token
 
 ## Philosophy
 
-Riflow is not a Meridian clone. Meridian-style safety architecture is useful, but Riflow's center of gravity is model competition plus AI-to-memory-to-AI reasoning. The system learns through stored lessons and structured reflection while deterministic rules keep execution conservative.
+Riflow's center of gravity is model competition plus AI-to-memory-to-AI reasoning. The system learns through stored lessons and structured reflection while deterministic rules keep execution conservative.
 
 ## License
 
